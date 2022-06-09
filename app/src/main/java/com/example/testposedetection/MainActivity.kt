@@ -14,31 +14,19 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.testposedetection.java.posedetector.PoseDetectorProcessor
-import com.example.testposedetection.java.posedetector.classification.PoseClassifierProcessor
 import com.example.testposedetection.kotlin.CameraXLivePreviewActivity
-import io.karn.notify.Notify
-
+import androidx.databinding.DataBindingUtil
 import java.util.ArrayList
-import java.util.concurrent.Executors
-
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
-
-import android.net.Uri
-
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+//import com.example.testposedetection.databinding.ActivityMainBinding
 import com.google.android.gms.awareness.Awareness
 import com.google.android.gms.awareness.fence.*
 
@@ -52,10 +40,13 @@ class MainActivity : AppCompatActivity() , ActivityCompat.OnRequestPermissionsRe
     private val notificationId = 101
 
 
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         editText = findViewById(R.id.editTextNumber)
 
@@ -78,6 +69,8 @@ class MainActivity : AppCompatActivity() , ActivityCompat.OnRequestPermissionsRe
 
         setupFences()
     }
+
+
 
     private fun allRuntimePermissionsGranted(): Boolean {
         for (permission in REQUIRED_RUNTIME_PERMISSIONS) {
@@ -169,7 +162,7 @@ class MainActivity : AppCompatActivity() , ActivityCompat.OnRequestPermissionsRe
 
     private fun setupFences() {
         val intent = Intent("FENCE_RECEIVER_ACTION")
-        myPendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        myPendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         fenceReceiver = FenceReceiver()
         registerReceiver(
             fenceReceiver,
