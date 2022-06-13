@@ -26,36 +26,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/playButton"
+
+        <!--
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/horizontal_margin"
-            android:layout_marginEnd="@dimen/horizontal_margin"
-            android:paddingStart="@dimen/button_padding"
-            android:paddingEnd="@dimen/button_padding"
-            android:text="@string/exercises"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/button_text_size"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="50dp"
+            android:text=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleImage" />
+            app:layout_constraintTop_toTopOf="parent" />-->
 
-        <ImageView
-            android:id="@+id/titleImage"
+        <Button
+            android:id="@+id/button"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="300dp"
+            android:backgroundTint="#69E4A1"
+            android:text="Do exercices"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextNumber"
             android:layout_width="0dp"
-            android:layout_height="@dimen/image_header_height"
-            android:layout_marginStart="@dimen/horizontal_margin"
-            android:layout_marginEnd="@dimen/horizontal_margin"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@+id/playButton"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="80dp"
+            android:ems="10"
+            android:hint="When to notify"
+            android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_info" />
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="53dp"
+            android:backgroundTint="#69E4A1"
+            android:text="Set Time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -24,8 +24,13 @@ import androidx.databinding.DataBindingUtil
 import java.util.ArrayList
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 //import com.example.testposedetection.databinding.ActivityMainBinding
 import com.google.android.gms.awareness.Awareness
 import com.google.android.gms.awareness.fence.*
@@ -71,6 +76,12 @@ class MainActivity : AppCompatActivity() , ActivityCompat.OnRequestPermissionsRe
     }
 
 
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.options_menu, menu)
+        return true
+    }
 
     private fun allRuntimePermissionsGranted(): Boolean {
         for (permission in REQUIRED_RUNTIME_PERMISSIONS) {
@@ -162,7 +173,7 @@ class MainActivity : AppCompatActivity() , ActivityCompat.OnRequestPermissionsRe
 
     private fun setupFences() {
         val intent = Intent("FENCE_RECEIVER_ACTION")
-        myPendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        myPendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
         fenceReceiver = FenceReceiver()
         registerReceiver(
             fenceReceiver,

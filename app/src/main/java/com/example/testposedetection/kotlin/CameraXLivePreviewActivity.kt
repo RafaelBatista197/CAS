@@ -16,42 +16,31 @@
 
 package com.example.testposedetection.kotlin
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.CompoundButton
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.Toast
-import android.widget.ToggleButton
 import androidx.annotation.RequiresApi
-import androidx.camera.core.CameraInfoUnavailableException
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
+import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.testposedetection.detectionAndCamera.GraphicOverlay
 import com.example.testposedetection.R
+import com.example.testposedetection.detectionAndCamera.CameraXViewModel
+import com.example.testposedetection.detectionAndCamera.GraphicOverlay
 import com.example.testposedetection.detectionAndCamera.VisionImageProcessor
+import com.example.testposedetection.java.posedetector.PoseDetectorProcessor
+import com.example.testposedetection.preference.PreferenceUtils
 import com.example.testposedetection.preference.SettingsActivity
 import com.google.android.gms.common.annotation.KeepName
 import com.google.mlkit.common.MlKitException
-import com.example.testposedetection.detectionAndCamera.CameraXViewModel
-import com.example.testposedetection.java.posedetector.PoseDetectorProcessor
-import com.example.testposedetection.preference.PreferenceUtils
-
-import java.util.ArrayList
 
 /** Live preview demo app for ML Kit APIs using CameraX. */
 @KeepName
@@ -69,6 +58,8 @@ class CameraXLivePreviewActivity :
   private var selectedModel = POSE_DETECTION
   private var lensFacing = CameraSelector.LENS_FACING_BACK
   private var cameraSelector: CameraSelector? = null
+
+
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -193,6 +184,7 @@ class CameraXLivePreviewActivity :
     }
   }
 
+
   private fun bindPreviewUseCase() {
     if (!PreferenceUtils.isCameraLiveViewportEnabled(this)) {
       return
@@ -298,5 +290,8 @@ class CameraXLivePreviewActivity :
     private const val POSE_DETECTION = "Pose Detection"
 
     private const val STATE_SELECTED_MODEL = "selected_model"
+
+
+
   }
 }

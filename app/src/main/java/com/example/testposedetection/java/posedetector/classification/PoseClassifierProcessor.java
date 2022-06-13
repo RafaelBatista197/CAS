@@ -21,9 +21,11 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.WorkerThread;
 
+import com.example.testposedetection.kotlin.CameraXLivePreviewActivity;
 import com.google.common.base.Preconditions;
 import com.google.mlkit.vision.pose.Pose;
 
@@ -39,16 +41,17 @@ import java.util.Locale;
  */
 public class PoseClassifierProcessor {
   private static final String TAG = "PoseClassifierProcessor";
-  private static final String POSE_SAMPLES_FILE = "pose/exercices.csv";
+  private static final String POSE_SAMPLES_FILE = "pose/poses_final.csv";
 
   // Specify classes for which we want rep counting.
   // These are the labels in the given {@code POSE_SAMPLES_FILE}. You can set your own class labels
   // for your pose samples.
-  private static final String NECK_CLASS = "neck_backward";
-  private static final String NECK_ROTATION_CLASS = "neck_rotation_left";
-  private static final String NECK_SIDE_CLASS = "neck_side_bend_left";
+  private static final String NECK_LEFT_CLASS = "neck_left";
+  private static final String NECK_RIGHT_CLASS = "neck_right";
+  private static final String ARMS_OPEN_CLASS = "arms_open";
+  private static final String ARMS_UP = "arms_up";
   private static final String[] POSE_CLASSES = {
-          NECK_CLASS, NECK_ROTATION_CLASS, NECK_SIDE_CLASS
+          NECK_LEFT_CLASS, ARMS_OPEN_CLASS, ARMS_UP, NECK_RIGHT_CLASS
   };
 
   private final boolean isStreamMode;
@@ -131,6 +134,7 @@ public class PoseClassifierProcessor {
               Locale.US, "%s : %d reps", repCounter.getClassName(), repsAfter);
           break;
         }
+
       }
       result.add(lastRepResult);
     }
