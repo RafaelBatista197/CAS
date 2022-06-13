@@ -59,13 +59,13 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
         setTimeOnClick()
 
         //The complete onClickListener with Navigation
-        binding.button.setOnClickListener { view : View ->
+        binding.tryExercises.setOnClickListener { view : View ->
             val intent = Intent(context, CameraXLivePreviewActivity::class.java)
             startActivity(intent)
         }
 
         //Open Chat Bot
-        binding.button4.setOnClickListener { view: View ->
+        binding.chatBot.setOnClickListener { view: View ->
             val intent = Intent(context, ChatBotActivity::class.java)
             startActivity(intent)
         }
@@ -145,7 +145,7 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
 
 
     fun setTimeOnClick () {
-        binding.button3.setOnClickListener { view : View ->
+        binding.setTime.setOnClickListener { view : View ->
             val stillFence: AwarenessFence =
                 DetectedActivityFence.during(DetectedActivityFence.STILL)
 
@@ -270,6 +270,7 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
                         sendNotification()
                     FenceState.FALSE -> fenceInfo = "FALSE: "
                     FenceState.UNKNOWN ->
+                        //sendNotification()
                         fenceInfo = "UNKNOWN: "
                 }
                 else -> fenceInfo = "Error: unknown fence."

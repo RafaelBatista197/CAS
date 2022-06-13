@@ -51,7 +51,8 @@ public class PoseClassifierProcessor {
   private static final String ARMS_OPEN_CLASS = "arms_open";
   private static final String ARMS_UP = "arms_up";
   private static final String[] POSE_CLASSES = {
-          NECK_LEFT_CLASS, ARMS_OPEN_CLASS, ARMS_UP, NECK_RIGHT_CLASS
+          //NECK_LEFT_CLASS,
+          ARMS_OPEN_CLASS, ARMS_UP,
   };
 
   private final boolean isStreamMode;

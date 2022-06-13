@@ -4,29 +4,43 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.3041025641025641" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/drawable-mdpi/about_android_trivia.xml" value="0.185" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/drawable-xxhdpi/bg_chat_receive.xml" value="0.185" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/layout/activity_fragment_controller.xml" value="0.17831813576494426" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/layout/activity_main2.xml" value="0.25" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/layout/adapter_message_one.xml" value="0.358695652173913" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/layout/fragment_about.xml" value="0.358695652173913" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/layout/fragment_exercices.xml" value="0.358695652173913" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/layout/fragment_title.xml" value="0.358695652173913" />
-        <entry key="..\:/School/semester2/COS-ContextAwareSystems/CAS/app/src/main/res/menu/winner_menu.xml" value="0.36666666666666664" />
+        <entry key="app/src/main/res/drawable-mdpi/about_android_trivia.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable-mdpi/android.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable-mdpi/android_category_simple.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable-mdpi/android_trivia.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable-mdpi/nav_header.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable-mdpi/rules.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable-mdpi/settings.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable-mdpi/share.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable-mdpi/trivia_rules.xml" value="0.181" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.162" />
+        <entry key="app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.181" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.162" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.162" />
         <entry key="app/src/main/res/drawable/list_item_background.xml" value="0.162" />
         <entry key="app/src/main/res/layout-land/activity_vision_camerax_live_preview.xml" value="0.1859375" />
         <entry key="app/src/main/res/layout/activity_chooser.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_fragment_controller.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3527267456054688" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_vision_camerax_live_preview.xml" value="0.16168478260869565" />
         <entry key="app/src/main/res/layout/activity_vision_entry_choice.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.13697916666666668" />
+        <entry key="app/src/main/res/layout/fragment_exercices.xml" value="0.17572463768115942" />
+        <entry key="app/src/main/res/layout/fragment_first_screen.xml" value="0.17572463768115942" />
+        <entry key="app/src/main/res/layout/fragment_rules.xml" value="0.13697916666666668" />
+        <entry key="app/src/main/res/layout/fragment_second_screen.xml" value="0.13697916666666668" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.13697916666666668" />
+        <entry key="app/src/main/res/layout/fragment_third_screen.xml" value="0.13697916666666668" />
+        <entry key="app/src/main/res/layout/fragment_title.xml" value="0.3151555028455011" />
+        <entry key="app/src/main/res/layout/fragment_view_pager.xml" value="0.13697916666666668" />
+        <entry key="app/src/main/res/layout/nav_header.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/settings_style.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/spinner_style.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/toggle_style.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/menu/navdrawer_menu.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/menu/options_menu.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/menu/winner_menu.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/xml/preference_live_preview_quickstart.xml" value="0.19610507246376813" />
       </map>
     </option>

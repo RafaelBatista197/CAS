@@ -198,4 +198,9 @@
     <string name="do_exercices">Do exercices</string>
     <string name="set_time_seconds">Set Time</string>
     <string name="talk_to_bob">Talk to Bob</string>
+    <string name="exercise_and_count_your_repetitions">Exercise and count your repetitions</string>
+    <string name="set_time">Set time</string>
+    <string name="write_the_number_of_seconds_to_when_to_be_notify">Write the number of seconds to when to be notify</string>
+    <string name="set_notification_time_seconds">Set Notification Time (seconds)</string>
+    <string name="open_camera">Open Camera</string>
 </resources>
