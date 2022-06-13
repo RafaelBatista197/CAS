@@ -44,6 +44,11 @@ class ChatBotActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val actionBar = supportActionBar
+
+        actionBar!!.title = "Chat Bot Activity"
+        actionBar.setDisplayHomeAsUpEnabled(true)
+
         //binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_chat_bot)
 
