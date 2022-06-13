@@ -1,280 +1,134 @@
 package com.example.testposedetection
 
-import android.Manifest
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.PackageManager
-import android.os.Build
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
-import androidx.annotation.RequiresApi
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.*
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.example.testposedetection.kotlin.CameraXLivePreviewActivity
-import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.google.api.gax.core.FixedCredentialsProvider
+import com.google.auth.oauth2.GoogleCredentials
+import com.google.auth.oauth2.ServiceAccountCredentials
+import com.google.cloud.dialogflow.v2.DetectIntentRequest
+import com.google.cloud.dialogflow.v2.DetectIntentResponse
+import com.google.cloud.dialogflow.v2.QueryInput
+import com.google.cloud.dialogflow.v2.SessionName
+import com.google.cloud.dialogflow.v2.SessionsClient
+import com.google.cloud.dialogflow.v2.SessionsSettings
+import com.google.cloud.dialogflow.v2.TextInput
+import com.vignesh.chatbotkotlin.adapters.ChatAdapter
+import com.vignesh.chatbotkotlin.models.Message
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.ArrayList
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
+import java.util.UUID
 //import com.example.testposedetection.databinding.ActivityMainBinding
-import com.google.android.gms.awareness.Awareness
-import com.google.android.gms.awareness.fence.*
 
+class MainActivity : AppCompatActivity() {
+    private var messageList: ArrayList<Message> = ArrayList()
 
-class MainActivity : AppCompatActivity() , ActivityCompat.OnRequestPermissionsResultCallback {
+    //dialogFlow
+    private var sessionsClient: SessionsClient? = null
+    private var sessionName: SessionName? = null
+    private val uuid = UUID.randomUUID().toString()
+    private val TAG = "mainactivity"
+    private lateinit var chatAdapter: ChatAdapter
 
-    private lateinit var textView: TextView
-    private lateinit var editText: EditText
+    //private lateinit var binding: ActivityMainBinding
 
-    private val CHANNEL_ID = "channel_id_example_01"
-    private val notificationId = 101
-
-
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
 
-        //binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        //setting adapter to recyclerview
+        chatAdapter = ChatAdapter(this, messageList)
+        findViewById<RecyclerView>(R.id.chatView).adapter = chatAdapter
 
-        editText = findViewById(R.id.editTextNumber)
-
-        textView = findViewById(R.id.textView)
-
-
-        createNotificationChannel()
-
-
-
-
-        findViewById<Button>(R.id.button).setOnClickListener {
-            val intent = Intent(this, CameraXLivePreviewActivity::class.java)
-            startActivity(intent)
+        //onclick listener to update the list and call dialogflow
+        findViewById<ImageButton>(R.id.btnSend).setOnClickListener {
+            val message: String = findViewById<EditText>(R.id.editMessage).text.toString()
+            if (message.isNotEmpty()) {
+                addMessageToList(message, false)
+                sendMessageToBot(message)
+            } else {
+                Toast.makeText(this@MainActivity, "Please enter text!", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        if (!allRuntimePermissionsGranted()) {
-            getRuntimePermissions()
+        //initialize bot config
+        setUpBot()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun addMessageToList(message: String, isReceived: Boolean) {
+        messageList.add(Message(message, isReceived))
+        findViewById<EditText>(R.id.editMessage).setText("")
+        chatAdapter.notifyDataSetChanged()
+        findViewById<RecyclerView>(R.id.chatView).layoutManager?.scrollToPosition(messageList.size - 1)
+    }
+
+    private fun setUpBot() {
+        try {
+            val stream = this.resources.openRawResource(R.raw.credential)
+            val credentials: GoogleCredentials = GoogleCredentials.fromStream(stream)
+                .createScoped("https://www.googleapis.com/auth/cloud-platform")
+            val projectId: String = (credentials as ServiceAccountCredentials).projectId
+            val settingsBuilder: SessionsSettings.Builder = SessionsSettings.newBuilder()
+            val sessionsSettings: SessionsSettings = settingsBuilder.setCredentialsProvider(
+                FixedCredentialsProvider.create(credentials)
+            ).build()
+            sessionsClient = SessionsClient.create(sessionsSettings)
+            sessionName = SessionName.of(projectId, uuid)
+            Log.d(TAG, "projectId : $projectId")
+        } catch (e: Exception) {
+            Log.d(TAG, "setUpBot: " + e.message)
         }
-
-        setupFences()
     }
 
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.options_menu, menu)
-        return true
+    private fun sendMessageToBot(message: String) {
+        val input = QueryInput.newBuilder()
+            .setText(TextInput.newBuilder().setText(message).setLanguageCode("en-US")).build()
+        GlobalScope.launch {
+            sendMessageInBg(input)
+        }
     }
 
-    private fun allRuntimePermissionsGranted(): Boolean {
-        for (permission in REQUIRED_RUNTIME_PERMISSIONS) {
-            permission?.let {
-                if (!isPermissionGranted(this, it)) {
-                    return false
+    private suspend fun sendMessageInBg(
+        queryInput: QueryInput
+    ) {
+        withContext(Default) {
+            try {
+                val detectIntentRequest = DetectIntentRequest.newBuilder()
+                    .setSession(sessionName.toString())
+                    .setQueryInput(queryInput)
+                    .build()
+                val result = sessionsClient?.detectIntent(detectIntentRequest)
+                if (result != null) {
+                    runOnUiThread {
+                        updateUI(result)
+                    }
                 }
+            } catch (e: java.lang.Exception) {
+                Log.d(TAG, "doInBackground: " + e.message)
+                e.printStackTrace()
             }
         }
-        return true
     }
 
-    private fun getRuntimePermissions() {
-        val permissionsToRequest = ArrayList<String>()
-        for (permission in REQUIRED_RUNTIME_PERMISSIONS) {
-            permission?.let {
-                if (!isPermissionGranted(this, it)) {
-                    permissionsToRequest.add(permission)
-                }
-            }
-        }
-
-        if (permissionsToRequest.isNotEmpty()) {
-            ActivityCompat.requestPermissions(
-                this,
-                permissionsToRequest.toTypedArray(),
-                PERMISSION_REQUESTS
-            )
+    private fun updateUI(response: DetectIntentResponse) {
+        val botReply: String = response.queryResult.fulfillmentText
+        if (botReply.isNotEmpty()) {
+            addMessageToList(botReply, true)
+        } else {
+            Toast.makeText(this, "something went wrong", Toast.LENGTH_SHORT).show()
         }
     }
-
-    private fun isPermissionGranted(context: Context, permission: String): Boolean {
-        if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
-        ) {
-            Log.i(TAG, "Permission granted: $permission")
-            return true
-        }
-        Log.i(TAG, "Permission NOT granted: $permission")
-        return false
-    }
-
-    companion object {
-        private const val TAG = "EntryChoiceActivity"
-        private const val PERMISSION_REQUESTS = 1
-
-
-        private val REQUIRED_RUNTIME_PERMISSIONS =
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACTIVITY_RECOGNITION
-            )
-    }
-
-
-    fun setTimeOnClick (view: View) {
-
-        val stillFence: AwarenessFence =
-            DetectedActivityFence.during(DetectedActivityFence.STILL)
-
-        val nowMillis = System.currentTimeMillis()
-
-        val getTime = (Integer.parseInt(editText.getText().toString())).toLong()
-
-
-        val oneMinuteMilis = 300L * 1000L
-        val thirtySecondsMillis = getTime * 1000L
-        val timeFence: AwarenessFence = TimeFence.inInterval(
-            nowMillis + thirtySecondsMillis,  // starting in thirty seconds
-            nowMillis + thirtySecondsMillis + oneMinuteMilis // lasts for one minute
-        )
-        addFence("timeFence", timeFence)
-
-        addFence("stillFence", stillFence)
-
-        val timeAndStillFence = AwarenessFence.and(
-            stillFence, timeFence)
-
-        addFence("timeAndStillFence", timeAndStillFence)
-    }
-
-
-    ////// FENCES ///////
-
-
-    private lateinit var fenceReceiver: FenceReceiver
-    private lateinit var myPendingIntent: PendingIntent
-
-    private fun setupFences() {
-        val intent = Intent("FENCE_RECEIVER_ACTION")
-        myPendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
-        fenceReceiver = FenceReceiver()
-        registerReceiver(
-            fenceReceiver,
-            IntentFilter("FENCE_RECEIVER_ACTION")
-        )
-    }
-
-    private fun addFence(fenceKey: String, fence: AwarenessFence) {
-        Awareness.getFenceClient(this).updateFences(
-            FenceUpdateRequest.Builder()
-                .addFence(fenceKey, fence, myPendingIntent)
-                .build()
-        )
-            .addOnSuccessListener {
-                val text = "\n Fence successfully registered: $fenceKey "
-                textView.text = "$text\n${textView.text}"
-            }
-            .addOnFailureListener { e ->
-                val text =
-                    "\n Fence could not be registered: ${fenceKey}. Error: ${e.message}"
-                textView.text = "$text\n${textView.text}"
-            }
-    }
-
-    private inner class FenceReceiver : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent) {
-            if (intent.action != "FENCE_RECEIVER_ACTION") {
-                Log.e(
-                    "TAG_FENCES",
-                    "Error: unsupported action (${intent.action})"
-                )
-                return
-            }
-            val fenceState: FenceState = FenceState.extract(intent)
-            var fenceInfo: String? = null
-            when (fenceState.fenceKey) {
-                "stillFence" -> when (fenceState.currentState) {
-                    FenceState.TRUE -> fenceInfo = "TRUE: Still."
-                    //FenceState.FALSE -> //fences()
-                    //FenceState.UNKNOWN -> //fences()
-                }
-                "timeFence" -> when (fenceState.currentState) {
-                    FenceState.TRUE -> fenceInfo = "TRUE: Within timeslot."
-                    FenceState.FALSE -> fenceInfo = "FALSE: Out of timeslot."
-                    FenceState.UNKNOWN -> fenceInfo = "Error: unknown state."
-                }
-                "timeAndStillFence" -> when (fenceState.currentState) {
-                    FenceState.TRUE ->
-                        sendNotification()
-                    FenceState.FALSE -> fenceInfo = "FALSE: "
-                    FenceState.UNKNOWN ->
-                        fenceInfo = "UNKNOWN: "
-                }
-                else -> fenceInfo = "Error: unknown fence."
-            }
-
-            val text = "\n[Fence ${fenceState.fenceKey} - $fenceInfo"
-            textView.text = "$text\n${textView.text}"
-        }
-    }
-
-
-
-
-
-    private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Notification Title"
-            val descriptionText = "Notification Descritpion"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            // Register the channel with the system
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun sendNotification() {
-
-        // Create an explicit intent for an Activity in your app
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-            .setContentTitle("Example title")
-            .setContentText("Example description")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-
-        with(NotificationManagerCompat.from(this)) {
-            notify(notificationId, builder.build())
-        }
-    }
-
 }

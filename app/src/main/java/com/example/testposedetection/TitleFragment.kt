@@ -57,11 +57,18 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
         binding = DataBindingUtil.inflate<FragmentTitleBinding>(inflater,
             R.layout.fragment_title,container,false)
 
+        //Set notification time, in seconds
         setTimeOnClick()
 
         //The complete onClickListener with Navigation
         binding.button.setOnClickListener { view : View ->
             val intent = Intent(context, CameraXLivePreviewActivity::class.java)
+            startActivity(intent)
+        }
+
+        //Open Chat Bot
+        binding.button4.setOnClickListener { view: View ->
+            val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
         }
 
@@ -181,7 +188,13 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
 
     private fun setupFences() {
         val intent = Intent("FENCE_RECEIVER_ACTION")
-        myPendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+
+        myPendingIntent = if(Build.VERSION.SDK_INT >= 31){
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        }else{
+            PendingIntent.getBroadcast(context, 0, intent, 0)
+        }
+
         fenceReceiver = FenceReceiver()
         registerReceiver(
             requireContext(),

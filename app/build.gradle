@@ -38,6 +38,11 @@ android {
     aaptOptions {
         noCompress "tflite"
     }
+
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
@@ -92,6 +97,10 @@ dependencies {
 
     //Notification Library
     implementation "io.karn:notify:1.3.0"
+
+    //dialogFlow
+    implementation 'com.google.cloud:google-cloud-dialogflow:2.1.0'
+    implementation 'io.grpc:grpc-okhttp:1.30.0'
 }
 
 configurations {
