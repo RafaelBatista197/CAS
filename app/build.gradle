@@ -14,7 +14,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
     }
+
+
 
     buildFeatures {
         dataBinding true
@@ -59,6 +63,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'androidx.databinding:databinding-ktx:7.1.2'
+
 
     def camerax_version = "1.0.0-rc01"
     def camerax_view_version = "1.0.0-alpha20"

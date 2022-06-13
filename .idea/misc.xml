@@ -14,7 +14,13 @@
         <entry key="app/src/main/res/drawable-mdpi/share.xml" value="0.181" />
         <entry key="app/src/main/res/drawable-mdpi/trivia_rules.xml" value="0.181" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.162" />
+        <entry key="app/src/main/res/drawable-xxhdpi/bg_chat_receive.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable-xxhdpi/border_outline.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable/baseline_help_24.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable/ic_baseline_accessibility_new_24.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.181" />
         <entry key="app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable/ic_baseline_rule_24.xml" value="0.181" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.162" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.162" />
         <entry key="app/src/main/res/drawable/list_item_background.xml" value="0.162" />
@@ -26,13 +32,13 @@
         <entry key="app/src/main/res/layout/activity_vision_camerax_live_preview.xml" value="0.16168478260869565" />
         <entry key="app/src/main/res/layout/activity_vision_entry_choice.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.13697916666666668" />
-        <entry key="app/src/main/res/layout/fragment_exercices.xml" value="0.17572463768115942" />
+        <entry key="app/src/main/res/layout/fragment_exercices.xml" value="0.31657257080078127" />
         <entry key="app/src/main/res/layout/fragment_first_screen.xml" value="0.17572463768115942" />
         <entry key="app/src/main/res/layout/fragment_rules.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_second_screen.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/fragment_third_screen.xml" value="0.13697916666666668" />
-        <entry key="app/src/main/res/layout/fragment_title.xml" value="0.3151555028455011" />
+        <entry key="app/src/main/res/layout/fragment_title.xml" value="0.41434603585981594" />
         <entry key="app/src/main/res/layout/fragment_view_pager.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.13697916666666668" />
         <entry key="app/src/main/res/layout/settings_style.xml" value="0.19610507246376813" />
@@ -45,7 +51,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Embedded JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
