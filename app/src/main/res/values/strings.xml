@@ -193,4 +193,9 @@
     <string name="home">Home</string>
     <string name="infodescription">This application was developed in the ambit of the Context Aware Systems class</string>
     <string name="exercises">Exercises</string>
+    <string name="enter_your_message">Enter your message</string>
+    <string name="send">Send</string>
+    <string name="do_exercices">Do exercices</string>
+    <string name="set_time_seconds">Set Time</string>
+    <string name="talk_to_bob">Talk to Bob</string>
 </resources>

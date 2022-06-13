@@ -13,7 +13,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -25,14 +24,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.example.testposedetection.MainActivity
+import com.example.testposedetection.ChatBotActivity
 
 import com.example.testposedetection.R
 import com.example.testposedetection.databinding.FragmentTitleBinding
 import com.example.testposedetection.kotlin.CameraXLivePreviewActivity
 import com.google.android.gms.awareness.Awareness
 import com.google.android.gms.awareness.fence.*
-import java.lang.Exception
 import java.util.ArrayList
 
 
@@ -43,7 +41,7 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
     private lateinit var binding : FragmentTitleBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         createNotificationChannel()
 
@@ -68,7 +66,7 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
 
         //Open Chat Bot
         binding.button4.setOnClickListener { view: View ->
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, ChatBotActivity::class.java)
             startActivity(intent)
         }
 

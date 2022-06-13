@@ -1,7 +1,6 @@
 package com.example.android.navigation.onboarding.screens
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.testposedetection.MainActivity
 import com.example.testposedetection.R
 import com.example.testposedetection.databinding.FragmentThirdScreenBinding
 
