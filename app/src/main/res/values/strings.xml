@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Stay Activity</string>
+    <string name="app_name">Stay Active</string>
     <string name="barcode_value">Barcode Value: %1$s</string>
 
     <string name="API_KEY">AIzaSyBHIbDvuTOsCUwIPpGFOmkJTZQed6R-7S0</string>
