@@ -25,13 +25,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.testposedetection.ChatBotActivity
-
 import com.example.testposedetection.R
 import com.example.testposedetection.databinding.FragmentTitleBinding
 import com.example.testposedetection.kotlin.CameraXLivePreviewActivity
 import com.google.android.gms.awareness.Awareness
 import com.google.android.gms.awareness.fence.*
-import java.util.ArrayList
 
 
 class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallback {
@@ -199,7 +197,7 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
         registerReceiver(
             requireContext(),
             fenceReceiver,
-            IntentFilter("FENCE_RECEIVER_ACTION",), RECEIVER_EXPORTED
+            IntentFilter("FENCE_RECEIVER_ACTION"), RECEIVER_EXPORTED
         )
     }
 
@@ -304,10 +302,15 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
     private fun sendNotification() {
 
         // Create an explicit intent for an Activity in your app
-        val intent = Intent(context, CameraXLivePreviewActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val intent1 = Intent(context, CameraXLivePreviewActivity::class.java)
+        intent1.addCategory(Intent. CATEGORY_LAUNCHER ) ;
+        intent1.setAction(Intent. ACTION_MAIN ) ;
+        intent1.putExtra(POSE, "all_poses").apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_IMMUTABLE)
+
 
         val builder = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
