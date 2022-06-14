@@ -18,6 +18,7 @@ package com.example.testposedetection.kotlin
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.util.Log
@@ -59,6 +60,9 @@ class CameraXLivePreviewActivity :
   private var lensFacing = CameraSelector.LENS_FACING_BACK
   private var cameraSelector: CameraSelector? = null
 
+  private lateinit var pose: String
+  val POSE = "pose"
+
 
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,19 +81,12 @@ class CameraXLivePreviewActivity :
     if (graphicOverlay == null) {
       Log.d(TAG, "graphicOverlay is null")
     }
-    val spinner = findViewById<Spinner>(R.id.spinner)
+
     val options: MutableList<String> = ArrayList()
 
     options.add(POSE_DETECTION)
 
 
-    // Creating adapter for spinner
-    val dataAdapter = ArrayAdapter(this, R.layout.spinner_style, options)
-    // Drop down layout style - list view with radio button
-    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    // attaching data adapter to spinner
-    spinner.adapter = dataAdapter
-    spinner.onItemSelectedListener = this
     val facingSwitch = findViewById<ToggleButton>(R.id.facing_switch)
     facingSwitch.setOnCheckedChangeListener(this)
     ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(application))
@@ -161,6 +158,10 @@ class CameraXLivePreviewActivity :
 
   public override fun onResume() {
     super.onResume()
+
+    pose = intent.getStringExtra(POSE).toString()
+    Toast.makeText(this, pose, Toast.LENGTH_SHORT).show();
+
     bindAllCameraUseCases()
   }
 
@@ -233,7 +234,7 @@ class CameraXLivePreviewActivity :
               visualizeZ,
               rescaleZ,
               runClassification,
-              /* isStreamMode = */ true
+              /* isStreamMode = */ true, pose
             )
           }
 

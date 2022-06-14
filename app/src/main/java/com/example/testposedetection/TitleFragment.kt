@@ -39,6 +39,7 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
     private val CHANNEL_ID = "channel_id_example_01"
     private val notificationId = 101
     private lateinit var binding : FragmentTitleBinding
+    val POSE = "pose"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -61,6 +62,7 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
         //The complete onClickListener with Navigation
         binding.tryExercises.setOnClickListener { view : View ->
             val intent = Intent(context, CameraXLivePreviewActivity::class.java)
+            intent.putExtra(POSE, "all_poses")
             startActivity(intent)
         }
 

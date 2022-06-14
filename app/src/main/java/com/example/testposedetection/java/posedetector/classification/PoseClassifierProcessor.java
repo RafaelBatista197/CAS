@@ -17,6 +17,7 @@
 package com.example.testposedetection.java.posedetector.classification;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Looper;
@@ -55,9 +56,11 @@ public class PoseClassifierProcessor {
   private static final String NECK_LEFT_CLASS = "neck_left";
   private static final String NECK_RIGHT_CLASS = "neck_right";
 
+
+
   private static final String[] POSE_CLASSES = {
-          ARMS_RAISE_DOWN,
-          ARMS_LATERAL_DOWN_CLASS, NECK_LEFT_CLASS, NECK_RIGHT_CLASS
+          ARMS_LATERAL_UP,
+          ARMS_RAISE_UP, NECK_LEFT_CLASS, NECK_RIGHT_CLASS
   };
 
   private final boolean isStreamMode;
@@ -66,15 +69,19 @@ public class PoseClassifierProcessor {
   private List<RepetitionCounter> repCounters;
   private PoseClassifier poseClassifier;
   private String lastRepResult;
+  private String pose;
+
 
   @WorkerThread
-  public PoseClassifierProcessor(Context context, boolean isStreamMode) {
+  public PoseClassifierProcessor(Context context, boolean isStreamMode, String poseString) {
     Preconditions.checkState(Looper.myLooper() != Looper.getMainLooper());
     this.isStreamMode = isStreamMode;
+    this.pose = poseString;
     if (isStreamMode) {
       emaSmoothing = new EMASmoothing();
       repCounters = new ArrayList<>();
       lastRepResult = "";
+
     }
     loadPoseSamples(context);
   }
@@ -98,8 +105,21 @@ public class PoseClassifierProcessor {
     }
     poseClassifier = new PoseClassifier(poseSamples);
     if (isStreamMode) {
-      for (String className : POSE_CLASSES) {
-        repCounters.add(new RepetitionCounter(className));
+      if (pose.equals("all_poses")){
+        for (String className : POSE_CLASSES) {
+          repCounters.add(new RepetitionCounter(className));
+        }
+      } else {
+        for (String className : POSE_CLASSES) {
+          if (className.equals(pose)) {
+            if (className.equals("neck_left")) {
+              repCounters.add(new RepetitionCounter("neck_right"));
+              repCounters.add(new RepetitionCounter("neck_left"));
+            } else {
+              repCounters.add(new RepetitionCounter(className));
+            }
+          }
+        }
       }
     }
   }

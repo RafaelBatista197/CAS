@@ -17,6 +17,7 @@
 package com.example.testposedetection.java.posedetector;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +50,8 @@ public class PoseDetectorProcessor
   private final Context context;
   private final Executor classificationExecutor;
 
+  private String poseString = "";
+
   private PoseClassifierProcessor poseClassifierProcessor;
   /** Internal class to hold Pose and classification results. */
   protected static class PoseWithClassification {
@@ -64,9 +67,11 @@ public class PoseDetectorProcessor
       return pose;
     }
 
+
     public List<String> getClassificationResult() {
       return classificationResult;
     }
+
   }
 
   public PoseDetectorProcessor(
@@ -76,7 +81,8 @@ public class PoseDetectorProcessor
       boolean visualizeZ,
       boolean rescaleZForVisualization,
       boolean runClassification,
-      boolean isStreamMode) {
+      boolean isStreamMode,
+      String pose) {
     super(context);
     this.showInFrameLikelihood = showInFrameLikelihood;
     this.visualizeZ = visualizeZ;
@@ -86,6 +92,7 @@ public class PoseDetectorProcessor
     this.isStreamMode = isStreamMode;
     this.context = context;
     classificationExecutor = Executors.newSingleThreadExecutor();
+    this.poseString = pose;
   }
 
   @Override
@@ -105,7 +112,7 @@ public class PoseDetectorProcessor
               List<String> classificationResult = new ArrayList<>();
               if (runClassification) {
                 if (poseClassifierProcessor == null) {
-                  poseClassifierProcessor = new PoseClassifierProcessor(context, isStreamMode);
+                  poseClassifierProcessor = new PoseClassifierProcessor(context, isStreamMode, "");
                 }
                 classificationResult = poseClassifierProcessor.getPoseResult(pose);
               }
@@ -124,7 +131,7 @@ public class PoseDetectorProcessor
               List<String> classificationResult = new ArrayList<>();
               if (runClassification) {
                 if (poseClassifierProcessor == null) {
-                  poseClassifierProcessor = new PoseClassifierProcessor(context, isStreamMode);
+                  poseClassifierProcessor = new PoseClassifierProcessor(context, isStreamMode, poseString);
                 }
                 classificationResult = poseClassifierProcessor.getPoseResult(pose);
               }

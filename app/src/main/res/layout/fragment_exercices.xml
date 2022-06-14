@@ -39,6 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="194dp"
                     android:scaleType="centerCrop"
+                    android:id="@+id/image_lateral_raise"
                     app:srcCompat="@drawable/ic_lateral_arms" />
 
                 <LinearLayout
@@ -55,8 +56,20 @@
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
+                </LinearLayout>
+                <!-- Buttons -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
 
-
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonArmLateral"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/set_time" />
                 </LinearLayout>
 
 
@@ -91,6 +104,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="194dp"
+                    android:id="@+id/image_neck_rotation"
                     app:srcCompat="@drawable/ic_neck_rotation" />
 
                 <LinearLayout
@@ -107,8 +121,21 @@
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
+                </LinearLayout>
 
+                <!-- Buttons -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonNeckRotation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/set_time" />
                 </LinearLayout>
 
 
@@ -140,6 +167,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="194dp"
+                    android:id="@+id/image_arms_raise"
                     app:srcCompat="@drawable/ic_raise_arms" />
 
                 <LinearLayout
@@ -155,8 +183,21 @@
                         android:text="xcxcxzc"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
+                </LinearLayout>
 
+                <!-- Buttons -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonArmsRaise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/set_time" />
                 </LinearLayout>
 
 
@@ -165,5 +206,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </ScrollView>
+
