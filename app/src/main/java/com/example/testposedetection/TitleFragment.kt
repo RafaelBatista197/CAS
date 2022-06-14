@@ -312,7 +312,7 @@ class TitleFragment : Fragment(), ActivityCompat.OnRequestPermissionsResultCallb
         val builder = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setContentTitle("It's time to exercise!")
-            .setContentText("Get up and work your ass up!")
+            .setContentText("Get up, it's time to work!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
