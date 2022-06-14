@@ -179,7 +179,7 @@
     <string name="description1">It is important to take a break from time to time, or else your health will deteorate down the line</string>
     <string name="next1">Next</string>
     <string name="title2">Take a Break</string>
-    <string name="description2">This app will notify you to take a break and so some simple exercices</string>
+    <string name="description2">This app will notify you to take a break and do some simple exercises</string>
     <string name="stretch">TODO</string>
     <string name="next2">Next</string>
     <string name="check">TODO</string>
@@ -201,4 +201,7 @@
     <string name="open_camera">Open Camera</string>
     <string name="chat_bot">Talk with Bob - Chat Bot</string>
     <string name="try_it">Try it!</string>
+    <string name="arm_lateral_raises_desc">1 - Stand with feet shoulder length apart and keep your hands at your side with palms facing forward.\n2 - Raise your arms up and out to the sides so that your arms are at shoulder height.\n3 - Then lower them to starting position, with a fluid and constant motion until you have completed the set.</string>
+    <string name="neck_rotation_description">1 - Get your face close to the camera.\n2 - Straighten your spine.\n3 - Rotate your neck to the left all the way until you feel a nice stretch.\n4 - Do the same for the right side.</string>
+    <string name="arms_up_desc">1 - Stand up.\n2 - Relax your body.\n3 - Breathe in while you lift your arms all the way up.\n4 - Breathe out while you slowly move your arms to the side of your torso.</string>
 </resources>
