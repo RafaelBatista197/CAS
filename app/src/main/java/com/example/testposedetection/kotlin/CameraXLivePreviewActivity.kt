@@ -160,7 +160,7 @@ class CameraXLivePreviewActivity :
     super.onResume()
 
     pose = intent.getStringExtra(POSE).toString()
-    Toast.makeText(this, pose, Toast.LENGTH_SHORT).show();
+    //Toast.makeText(this, pose, Toast.LENGTH_SHORT).show();
 
     bindAllCameraUseCases()
   }
