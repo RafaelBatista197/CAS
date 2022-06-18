@@ -1,5 +1,5 @@
 # STAY ACTIVE
-This project is an prototype application developed (contexto escolar?) which consists of a mobile application in Android, called “Stay Active”, with 
+This project is a prototype application developed in the ambit of the course Context-Aware-Systems, in the Master of Mobile Computer, which consists of a mobile application in Android, called “Stay Active”, with 
 the objective of fighting this bad habit and sedentarism of people. The application is able to detect both context and cognition and works as 
 follows: after a certain period of time (chosen by the liking of the user), using Google Awareness API and fences, the application detects the
 user has been still for too long and sends him a notification, recommending taking a break and do some simple exercises. The exercises
